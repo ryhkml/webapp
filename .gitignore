@@ -1,0 +1,8 @@
+/target
+/tmp
+
+*.env
+*.txt
+*.log
+
+.vscode

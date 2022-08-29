@@ -1,0 +1,13 @@
+/target
+/tmp
+
+Dockerfile*
+docker-compose*
+
+*.env
+*.log
+
+.git
+.gitignore
+
+.vscode
