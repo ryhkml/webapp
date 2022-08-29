@@ -19,8 +19,10 @@ async fn main() {
     headers.insert("X-XSS-Protection", "1; mode=block".parse().unwrap());
 
     let port = env::var("PORT")
-        .unwrap()
-        .parse::<u16>()
+        .unwrap_or_else(|_| {
+            22333.to_string()
+        })
+        .parse()
         .unwrap();
 
     let routes = warp::get()
@@ -28,6 +30,8 @@ async fn main() {
         .and(warp::fs::dir("www"))
         .with(warp::cors().allow_any_origin().allow_methods(&[Method::GET, Method::OPTIONS]))
         .with(warp::reply::with::headers(headers));
+    
+    println!("Server listening on port {}", port);
 
     warp::serve(routes)
         .run(([0, 0, 0, 0], port))
