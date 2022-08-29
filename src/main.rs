@@ -19,9 +19,9 @@ async fn main() {
     headers.insert("X-XSS-Protection", "1; mode=block".parse().unwrap());
 
     let port = env::var("PORT")
-    .unwrap()
-    .parse::<u16>()
-    .unwrap();
+        .unwrap()
+        .parse::<u16>()
+        .unwrap();
 
     let routes = warp::get()
         .and(warp::path::end())
