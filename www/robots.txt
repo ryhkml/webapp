@@ -1,0 +1,8 @@
+User-agent: *
+
+Crawl-delay: 10
+
+User-agent: WebReaper
+Disallow: /
+
+Sitemap: https://ryhkmll.com/sitemap.xml
