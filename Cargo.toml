@@ -15,7 +15,6 @@ lto = true
 
 [dependencies]
 handlebars = "4.3.3"
-dotenv = "0.15.0"
 tokio = { version = "1", features = ["full"] }
 serde = "1.0.144"
 warp = "0.3"

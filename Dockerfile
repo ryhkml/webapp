@@ -5,7 +5,7 @@ WORKDIR /app
 
 COPY src ./src/
 COPY www ./www/
-COPY Cargo* ./
+COPY Cargo.toml ./
 
 RUN cargo build --release
 
@@ -14,7 +14,6 @@ FROM scratch
 
 LABEL maintainer="Reyhan Kamil <reyhank95@hotmail.com>"
 
-ENV TZ=Asia/Jakarta
 ENV PORT=22333
 
 WORKDIR /bin

@@ -1,15 +1,12 @@
 #![deny(warnings)]
 
-extern crate dotenv;
-
 use std::env;
 use std::sync::Arc;
 
 use warp::Filter;
 use warp::http::header::HeaderMap;
-use warp::hyper::{Method, StatusCode};
+use warp::hyper::StatusCode;
 use serde::Serialize;
-use dotenv::dotenv;
 use handlebars::Handlebars;
 
 struct WithTemplate<T: Serialize> {
@@ -17,7 +14,7 @@ struct WithTemplate<T: Serialize> {
     value: T
 }
 
-fn render<T>(template: WithTemplate<T>, hbs: Arc<Handlebars<'_>>) -> impl warp::Reply where T: Serialize, {
+fn render<T>(template: WithTemplate<T>, hbs: Arc<Handlebars<'_>>) -> impl warp::Reply where T: Serialize {
 
     let render = hbs
         .render(template.name, &template.value)
@@ -28,8 +25,6 @@ fn render<T>(template: WithTemplate<T>, hbs: Arc<Handlebars<'_>>) -> impl warp::
 
 #[tokio::main]
 async fn main() {
-
-    dotenv().ok();
 
     let mut headers = HeaderMap::new();
     headers.insert("X-Frame-Options", "DENY".parse().unwrap());
@@ -73,7 +68,7 @@ async fn main() {
         .with(
             warp::cors()
                 .allow_any_origin()
-                .allow_methods(&[Method::GET, Method::OPTIONS])
+                .allow_methods(vec!["GET", "OPTIONS"])
         )
         .with(
             warp::reply::with::headers(headers)
