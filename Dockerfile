@@ -4,22 +4,22 @@ FROM ekidd/rust-musl-builder AS build
 WORKDIR /app
 
 COPY src ./src/
-COPY www ./www/
 COPY Cargo.toml ./
 
 RUN cargo build --release
 
 # Final stage
-FROM scratch
+FROM gcr.io/distroless/cc
 
 LABEL maintainer="Reyhan Kamil <reyhank95@hotmail.com>"
 
+ENV TZ=Asia/Jakarta
 ENV PORT=22333
 
 WORKDIR /bin
 
 COPY --from=build /app/target/x86_64-unknown-linux-musl/release/rey_webapp ./
-COPY --from=build /app/www ./www/
+COPY www ./www/
 
 EXPOSE ${PORT}
 
